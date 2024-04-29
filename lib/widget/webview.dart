@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -18,6 +20,18 @@ class _MainWebViewState extends State<MainWebView> {
   void initState() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..addJavaScriptChannel('shareChannel',
+          onMessageReceived: (JavaScriptMessage javaScriptMessage) async {
+        var data = jsonDecode(javaScriptMessage.message);
+
+        print(data);
+      })
+      ..addJavaScriptChannel('alertChannel',
+          onMessageReceived: (JavaScriptMessage javaScriptMessage) {
+        var data = jsonDecode(javaScriptMessage.message);
+
+        print(data);
+      })
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {},
