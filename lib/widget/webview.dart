@@ -70,24 +70,10 @@ class _MainWebViewState extends State<MainWebView> {
           bool isKakaoTalkSharingAvailable =
               await ShareClient.instance.isKakaoTalkSharingAvailable();
           if (isKakaoTalkSharingAvailable) {
-            String methodName = "";
-
-            switch (paymentMethod) {
-              case "1":
-                methodName = "원리금 균등 상환";
-                break;
-              case "2":
-                methodName = "원금 균등 상환";
-                break;
-              case "3":
-                methodName = "만기일시 상환";
-                break;
-            }
-
             FeedTemplate defaultFeed = FeedTemplate(
               content: Content(
-                title: '$amount원을 $methodName으로 $period년 대출하면..',
-                description: '연 이율이 $interest%일 때, 매월 얼마를 상환해야 할까요?',
+                title: "my-calculator",
+                description: "계산 결과를 확인해 보세요!",
                 imageUrl: Uri.parse('${dotenv.env['BASE_URL']}/favicon.png'),
                 link: Link(
                     webUrl: Uri.parse(redirectUrl),
