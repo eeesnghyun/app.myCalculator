@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -18,6 +19,7 @@ class MainWebView extends StatefulWidget {
 class _MainWebViewState extends State<MainWebView> {
   late WebViewController _controller = WebViewController();
   late FToast fToast;
+  bool _isLoading = true;
 
   void _openToast(
     String message,
@@ -110,7 +112,11 @@ class _MainWebViewState extends State<MainWebView> {
         NavigationDelegate(
           onProgress: (int progress) {},
           onPageStarted: (String url) {},
-          onPageFinished: (String url) async {},
+          onPageFinished: (String url) async {
+            setState(() {
+              _isLoading = false;
+            });
+          },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             return NavigationDecision.navigate;
@@ -124,6 +130,19 @@ class _MainWebViewState extends State<MainWebView> {
 
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(controller: _controller);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          WebViewWidget(controller: _controller),
+          Visibility(
+            visible: _isLoading,
+            child: const Positioned.fill(
+              child: SpinKitRing(color: Colors.blue),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
