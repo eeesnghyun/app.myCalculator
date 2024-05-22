@@ -21,3 +21,6 @@
 4. [Flutter로 모바일 서비스 개발하기](https://shxrecord.tistory.com/341)
 5. [플레이스토어와 앱스토어에 어플리케이션 배포하기](https://shxrecord.tistory.com/344)
 
+---
+
+※ android/ios에 등록된 카카오 api키는 폐기되었습니다.
